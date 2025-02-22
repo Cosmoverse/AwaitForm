@@ -1,0 +1,28 @@
+{
+    "name": "cosmicpe/awaitform",
+    "description": "Write clean form navigation flows in PocketMine-MP using async/await pattern",
+    "type": "library",
+    "license": "GPL-3.0-only",
+    "require": {
+        "php": "^8.3",
+        "pocketmine/pocketmine-mp": "^5.0.0",
+        "sof3/await-generator": "^3.6.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "cosmicpe\\awaitform\\": "src/cosmicpe/awaitform"
+        }
+    },
+    "authors": [
+        {
+            "name": "Muqsit",
+            "email": "notmuqsit@gmail.com"
+        }
+    ],
+    "extra": {
+        "virion": {
+            "spec": "3.0",
+            "namespace-root": "cosmicpe\\awaitform"
+        }
+    }
+}
