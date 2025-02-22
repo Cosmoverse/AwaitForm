@@ -29,7 +29,8 @@ $form = AwaitForm::form("Create a Ban Report", [
 ```
 <details align="center">
 	<summary>See demo</summary>
-	<img alt="Ban report form" src="https://i.imgur.com/PxNGyzJ.png"/>
+
+![Ban report form](https://github.com/user-attachments/assets/568c3775-6a2e-42d4-9383-ef559093d750)
 </details>
 
 Users get to utilize native PHP control flow syntax (while, for, continue, break, etc.; see
@@ -61,7 +62,8 @@ $player->setNoClientPredictions(false);
 ```
 <details align="center">
 	<summary>See demo</summary>
-	<video src="https://i.imgur.com/5CN4OUB.mp4"></video>
+	
+https://github.com/user-attachments/assets/ef36329b-a7e9-4d83-bdfe-b7920e3da5d3
 </details>
 
 ### When the user does not respond
@@ -108,8 +110,9 @@ while(true){
 }
 ```
 <details align="center">
-	<summary>See demo</summary>
-	<video src="https://i.imgur.com/2pj5lb2.mp4"></video>
+	<summary>See demo</summary>	
+
+https://github.com/user-attachments/assets/e75081f5-66c3-44cb-bdcd-fb9ff5b7f1e5
 </details>
 
 ### 2. Non-dismissible form
@@ -141,7 +144,8 @@ $player->getEffects()->remove(VanillaEffects::BLINDNESS());
 ```
 <details align="center">
 	<summary>See demo</summary>
-	<video src="https://i.imgur.com/CIXXrw9.mp4"></video>
+
+https://github.com/user-attachments/assets/04657987-23ec-4649-96fc-a86f5fe1811e
 </details>
 
 ### 3. Paginated button menu
@@ -179,7 +183,8 @@ while(true){
 ```
 <details align="center">
 	<summary>See demo</summary>
-	<video src="https://i.imgur.com/o77eXSJ.mp4"></video>
+
+https://github.com/user-attachments/assets/82296361-4741-46f7-b227-a1e577a91083
 </details>
 
 ### 4. Nested forms
@@ -243,8 +248,9 @@ while($state !== "DESTROY"){
 }
 ```
 <details align="center">
-	<summary>See demo</summary>
-	<video src="https://i.imgur.com/kXntqTB.mp4"></video>
+	<summary>See demo</summary>	
+
+https://github.com/user-attachments/assets/e654822f-598a-4b67-af93-049de33197a2
 </details>
 
 ## Reusing Forms
