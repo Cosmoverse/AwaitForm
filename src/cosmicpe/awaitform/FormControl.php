@@ -19,7 +19,7 @@ use function implode;
 final class FormControl{
 
 	/**
-	 * Creates a vertical divider. Useful when organizing sections.
+	 * Creates a horizontal divider. Useful when organizing sections.
 	 *
 	 * @return self
 	 */
