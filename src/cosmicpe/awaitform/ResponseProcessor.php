@@ -6,6 +6,7 @@ namespace cosmicpe\awaitform;
 
 use InvalidArgumentException;
 use RuntimeException;
+use function array_fill;
 use function array_is_list;
 use function array_key_exists;
 use function assert;
@@ -78,11 +79,26 @@ final class ResponseProcessor{
 		if($this->type === 1){
 			is_array($response) || throw new InvalidArgumentException("Unexpected response: " . gettype($response) . ", expected array");
 			array_is_list($response) || throw new InvalidArgumentException("Unexpected response, expected array to be a list");
-			count($response) === count($request["content"]) || throw new InvalidArgumentException("Unexpected response, expected receiving " . count($request["content"]) .  " values, got " . count($response) . " values");
+			$_response = array_fill(0, count($request["content"]), null);
+			$offset = 0;
 			foreach($request["content"] as $index => $request_data){
-				array_key_exists($index, $response) || throw new InvalidArgumentException("Unexpected response, no value supplied for {$request_data["type"]} {$request_data["text"]}");
+				if(isset($tags[$index]["readonly"]) && $tags[$index]["readonly"]){
+					$offset++;
+				}else{
+					array_key_exists($index - $offset, $response) || throw new InvalidArgumentException("Unexpected response, no value supplied for {$request_data["type"]} {$request_data["text"]}");
+					$_response[$index] = $response[$index - $offset];
+				}
+			}
+			count($response) === count($request["content"]) - $offset || throw new InvalidArgumentException("Unexpected response, expected receiving " . (count($request["content"]) - $offset) .  " values, got " . count($response) . " values");
+			$response = $_response;
+			foreach($request["content"] as $index => $request_data){
 				$value = $response[$index];
 				switch($request_data["type"]){
+					case "divider":
+					case "header":
+					case "label":
+						$value === null || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]}, expected null");
+						break;
 					case "dropdown":
 						is_int($value) || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]} {$request_data["text"]}, expected integer");
 						$value >= 0 || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]} {$request_data["text"]}, value is negative");
@@ -96,9 +112,6 @@ final class ResponseProcessor{
 						break;
 					case "input":
 						is_string($value) || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]} {$request_data["text"]}, expected string");
-						break;
-					case "label":
-						$response[$index] === null || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]} {$request_data["text"]}, expected null");
 						break;
 					case "slider":
 						is_int($value) || is_float($value) || throw new InvalidArgumentException("Unexpected response for {$request_data["type"]} {$request_data["text"]}, expected numeric");

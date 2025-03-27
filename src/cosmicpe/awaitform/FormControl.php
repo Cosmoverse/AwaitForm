@@ -19,6 +19,15 @@ use function implode;
 final class FormControl{
 
 	/**
+	 * Creates a vertical divider. Useful when organizing sections.
+	 *
+	 * @return self
+	 */
+	public static function divider() : self{
+		return new self(["type" => "divider", "text" => ""], ["readonly" => true]);
+	}
+
+	/**
 	 * @param string $label
 	 * @param non-empty-list<string> $options
 	 * @param int $default
@@ -88,6 +97,16 @@ final class FormControl{
 	}
 
 	/**
+	 * Creates a heading with a larger font size than normal text.
+	 *
+	 * @param string $label
+	 * @return self
+	 */
+	public static function header(string $label) : self{
+		return new self(["type" => "header", "text" => $label], ["readonly" => true]);
+	}
+
+	/**
 	 * Creates an input field initialized with a $default value. A non-empty $placeholder
 	 * string may be supplied (such as "Enter text...") for display purpose. Returns the
 	 * raw value supplied in this field as response.
@@ -108,7 +127,7 @@ final class FormControl{
 	 * @return self
 	 */
 	public static function label(string $label) : self{
-		return new self(["type" => "label", "text" => $label]);
+		return new self(["type" => "label", "text" => $label], ["readonly" => true]);
 	}
 
 	/**
