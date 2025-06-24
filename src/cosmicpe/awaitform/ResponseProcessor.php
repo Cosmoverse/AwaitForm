@@ -79,18 +79,7 @@ final class ResponseProcessor{
 		if($this->type === 1){
 			is_array($response) || throw new InvalidArgumentException("Unexpected response: " . gettype($response) . ", expected array");
 			array_is_list($response) || throw new InvalidArgumentException("Unexpected response, expected array to be a list");
-			$_response = array_fill(0, count($request["content"]), null);
-			$offset = 0;
-			foreach($request["content"] as $index => $request_data){
-				if(isset($tags[$index]["readonly"]) && $tags[$index]["readonly"]){
-					$offset++;
-				}else{
-					array_key_exists($index - $offset, $response) || throw new InvalidArgumentException("Unexpected response, no value supplied for {$request_data["type"]} {$request_data["text"]}");
-					$_response[$index] = $response[$index - $offset];
-				}
-			}
-			count($response) === count($request["content"]) - $offset || throw new InvalidArgumentException("Unexpected response, expected receiving " . (count($request["content"]) - $offset) .  " values, got " . count($response) . " values");
-			$response = $_response;
+			count($response) === count($request["content"]) || throw new InvalidArgumentException("Unexpected response, expected receiving " . (count($request["content"])) .  " values, got " . count($response) . " values");
 			foreach($request["content"] as $index => $request_data){
 				$value = $response[$index];
 				switch($request_data["type"]){
