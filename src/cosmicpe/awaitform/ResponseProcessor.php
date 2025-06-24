@@ -79,7 +79,6 @@ final class ResponseProcessor{
 		if($this->type === 1){
 			is_array($response) || throw new InvalidArgumentException("Unexpected response: " . gettype($response) . ", expected array");
 			array_is_list($response) || throw new InvalidArgumentException("Unexpected response, expected array to be a list");
-
 			count($response) === count($request["content"]) || throw new InvalidArgumentException("Unexpected response, expected receiving " . (count($request["content"])) .  " values, got " . count($response) . " values");
 			foreach($request["content"] as $index => $request_data){
 				$value = $response[$index];
