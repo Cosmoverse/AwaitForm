@@ -13,7 +13,7 @@ final class AwaitFormException extends RuntimeException{
 	 * Thrown when player sent form data that is incorrectly structured
 	 * or contains invalid values.
 	 */
-	public const int ERR_VALIDATION_FAILED = 100001;
+	public const ERR_VALIDATION_FAILED = 100001;
 
 	/**
 	 * Thrown when player rejects answering the form. This could be due
@@ -21,11 +21,11 @@ final class AwaitFormException extends RuntimeException{
 	 * {@see ModalFormResponsePacket::CANCEL_REASON_CLOSED}
 	 * {@see ModalFormResponsePacket::CANCEL_REASON_USER_BUSY}
 	 */
-	public const int ERR_PLAYER_REJECTED = 100002;
+	public const ERR_PLAYER_REJECTED = 100002;
 
 	/**
 	 * Thrown when player quits the server and therefore does not give
 	 * a response.
 	 */
-	public const int ERR_PLAYER_QUIT = 100003;
+	public const ERR_PLAYER_QUIT = 100003;
 }

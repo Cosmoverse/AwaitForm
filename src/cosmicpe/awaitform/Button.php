@@ -6,8 +6,8 @@ namespace cosmicpe\awaitform;
 
 final class Button{
 
-	public const string IMAGE_TYPE_PATH = "path";
-	public const string IMAGE_TYPE_URL = "url";
+	public const IMAGE_TYPE_PATH = "path";
+	public const IMAGE_TYPE_URL = "url";
 
 	/**
 	 * Creates a button with text and no image.
