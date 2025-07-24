@@ -34,9 +34,9 @@ final class FormControl{
 	 * @param array $tags
 	 * @return self
 	 */
-	private static function dropdownGeneric(string $label, array $options, int $default, array $tags = []) : self{
+	private static function dropdownGeneric(string $label, array $options, int $default, ?string $tooltip, array $tags = []) : self{
 		($default >= 0 && $default < count($options)) || throw new InvalidArgumentException("Default value index '{$default}' does not exist in options list: '" . implode(", ", $options) . "'");
-		return new self(["type" => "dropdown", "text" => $label, "options" => $options, "default" => $default], $tags);
+		return new self(["type" => "dropdown", "text" => $label, "options" => $options, "default" => $default, "tooltip" => $tooltip], $tags);
 	}
 
 	/**
@@ -49,14 +49,14 @@ final class FormControl{
 	 * @param string|null $default
 	 * @return self
 	 */
-	public static function dropdown(string $label, array $options, ?string $default = null) : self{
+	public static function dropdown(string $label, array $options, ?string $default = null, ?string $tooltip = null) : self{
 		if($default === null){
 			$default_index = 0;
 		}else{
 			$default_index = array_search($default, $options, true);
 			$default_index !== false || throw new InvalidArgumentException("Default value '{$default}' does not exist in options list: '" . implode(", ", $options) . "'");
 		}
-		return self::dropdownGeneric($label, $options, $default_index, ["return" => "value"]);
+		return self::dropdownGeneric($label, $options, $default_index, $tooltip, ["return" => "value"]);
 	}
 
 	/**
@@ -68,8 +68,8 @@ final class FormControl{
 	 * @param int $default
 	 * @return self
 	 */
-	public static function dropdownIndex(string $label, array $options, int $default = 0) : self{
-		return self::dropdownGeneric($label, $options, $default, ["return" => "key"]);
+	public static function dropdownIndex(string $label, array $options, int $default = 0, ?string $tooltip = null) : self{
+		return self::dropdownGeneric($label, $options, $default, $tooltip, ["return" => "key"]);
 	}
 
 	/**
@@ -86,14 +86,14 @@ final class FormControl{
 	 * @param TMapping|null $default
 	 * @return self
 	 */
-	public static function dropdownMap(string $label, array $options, array $mapping, mixed $default = null) : self{
+	public static function dropdownMap(string $label, array $options, array $mapping, mixed $default = null, ?string $tooltip = null) : self{
 		if($default === null){
 			$default_index = 0;
 		}else{
 			$default_index = array_search($default, $mapping, true);
 			$default_index !== false || throw new InvalidArgumentException("Default value '{$default}' does not exist in options list");
 		}
-		return self::dropdownGeneric($label, $options, $default_index, ["return" => "mapping", "mapping" => $mapping]);
+		return self::dropdownGeneric($label, $options, $default_index, $tooltip, ["return" => "mapping", "mapping" => $mapping]);
 	}
 
 	/**
@@ -116,8 +116,8 @@ final class FormControl{
 	 * @param string $default
 	 * @return self
 	 */
-	public static function input(string $label, string $placeholder = "", string $default = "") : self{
-		return new self(["type" => "input", "text" => $label, "placeholder" => $placeholder, "default" => $default]);
+	public static function input(string $label, string $placeholder = "", string $default = "", ?string $tooltip = null) : self{
+		return new self(["type" => "input", "text" => $label, "placeholder" => $placeholder, "default" => $default, "tooltip" => $tooltip]);
 	}
 
 	/**
@@ -142,8 +142,8 @@ final class FormControl{
 	 * @param float $default
 	 * @return self
 	 */
-	public static function slider(string $label, float $min, float $max, float $step = 0.0, float $default = 0.0) : self{
-		return new self(["type" => "slider", "text" => $label, "min" => $min, "max" => $max, "step" => $step, "default" => $default]);
+	public static function slider(string $label, float $min, float $max, float $step = 0.0, float $default = 0.0, ?string $tooltip = null) : self{
+		return new self(["type" => "slider", "text" => $label, "min" => $min, "max" => $max, "step" => $step, "default" => $default, "tooltip" => $tooltip]);
 	}
 
 	/**
@@ -156,14 +156,14 @@ final class FormControl{
 	 * @param string|null $default
 	 * @return self
 	 */
-	public static function stepSlider(string $label, array $steps, ?string $default = null) : self{
+	public static function stepSlider(string $label, array $steps, ?string $default = null, ?string $tooltip = null) : self{
 		if($default === null){
 			$default_index = 0;
 		}else{
 			$default_index = array_search($default, $steps, true);
 			$default_index !== false || throw new InvalidArgumentException("Default value '{$default}' does not exist in steps list: '" . implode(", ", $steps) . "'");
 		}
-		return new self(["type" => "step_slider", "text" => $label, "steps" => $steps, "default" => $default_index]);
+		return new self(["type" => "step_slider", "text" => $label, "steps" => $steps, "default" => $default_index, "tooltip" => $tooltip]);
 	}
 
 	/**
@@ -174,8 +174,8 @@ final class FormControl{
 	 * @param bool $default
 	 * @return self
 	 */
-	public static function toggle(string $label, bool $default = false) : self{
-		return new self(["type" => "toggle", "text" => $label, "default" => $default]);
+	public static function toggle(string $label, bool $default = false, ?string $tooltip = null) : self{
+		return new self(["type" => "toggle", "text" => $label, "default" => $default, "tooltip" => $tooltip]);
 	}
 
 	/**
