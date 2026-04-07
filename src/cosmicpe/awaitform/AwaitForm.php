@@ -66,13 +66,15 @@ final class AwaitForm implements Form{
 	 * Returns user response mapped to respective $content keys.
 	 * @param string $title
 	 * @param array<TIndex, FormControl> $content
+	 * @param array{type: "url"|"path", data: string}|null $icon {@see FormWindow::pathIcon(), FormWindow::urlIcon()}
+	 * @param string|null $submit_button_text
 	 * @return FormWindow<TIndex>
 	 * @see FormControl for more details.
 	 *
 	 * @template TIndex of string|int
 	 */
-	public static function form(string $title, array $content) : FormWindow{
-		return new FormWindow(self::$player_manager ?? self::playerManagerNotFound(), $title, $content);
+	public static function form(string $title, array $content, ?array $icon = null, ?string $submit_button_text = null) : FormWindow{
+		return new FormWindow(self::$player_manager ?? self::playerManagerNotFound(), $title, $content, $icon, $submit_button_text);
 	}
 
 	/**

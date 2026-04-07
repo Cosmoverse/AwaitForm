@@ -15,15 +15,27 @@ use function array_combine;
  */
 final class FormWindow{
 
+	public static function pathIcon(string $path) : array{
+		return ["type" => "path", "data" => $path];
+	}
+
+	public static function urlIcon(string $url) : array{
+		return ["type" => "url", "data" => $url];
+	}
+
 	/**
 	 * @param PlayerManager $manager
 	 * @param string $title
 	 * @param array<TIndex, FormControl> $content
+	 * @param array{type: "url"|"path", data: string}|null $icon
+	 * @param string|null $submit_button_text
 	 */
 	public function __construct(
 		readonly private PlayerManager $manager,
 		public string $title,
-		public array $content
+		public array $content,
+		public ?array $icon = null,
+		public ?string $submit_button_text = null
 	){}
 
 	/**
@@ -40,7 +52,9 @@ final class FormWindow{
 		$response = yield from $this->manager->sendPlayerForm($player, [
 			"type" => "custom_form",
 			"title" => TextFormat::RESET . $this->title,
-			"content" => $attributes[1]
+			"icon" => $this->icon,
+			"content" => $attributes[1],
+			"submit" => $this->submit_button_text
 		], ResponseProcessor::form(), $attributes[2]);
 		return array_combine($attributes[0], $response);
 	}
