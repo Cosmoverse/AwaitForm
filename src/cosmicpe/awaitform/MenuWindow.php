@@ -8,7 +8,6 @@ use Generator;
 use pocketmine\player\Player;
 use pocketmine\utils\TextFormat;
 use SOFe\AwaitGenerator\Await;
-use function array_map;
 
 /**
  * @template TResult
@@ -19,13 +18,13 @@ final class MenuWindow{
 	 * @param PlayerManager $manager
 	 * @param string $title
 	 * @param string $content
-	 * @param list<array{Button, TResult}> $buttons
+	 * @param list<array{MenuElement, TResult}> $elements
 	 */
 	public function __construct(
 		readonly private PlayerManager $manager,
 		public string $title,
 		public string $content,
-		public array $buttons
+		public array $elements
 	){}
 
 	/**
@@ -33,13 +32,18 @@ final class MenuWindow{
 	 * @return Generator<mixed, Await::RESOLVE|Await::REJECT, mixed, TResult>
 	 */
 	public function request(Player $player) : Generator{
+		$attributes = [[], []];
+		foreach($this->elements as [$value, ]){
+			$attributes[0][] = $value->data;
+			$attributes[1][] = $value->tags;
+		}
 		$response = yield from $this->manager->sendPlayerForm($player, [
 			"type" => "form",
 			"title" => TextFormat::RESET . $this->title,
 			"content" => $this->content,
-			"buttons" => array_map(static fn($x) => $x[0]->data, $this->buttons)
-		], ResponseProcessor::menu());
-		return $this->buttons[$response][1];
+			"elements" => $attributes[0]
+		], ResponseProcessor::menu(), $attributes[1]);
+		return $this->elements[$response][1];
 	}
 
 	/**

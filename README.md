@@ -152,6 +152,7 @@ https://github.com/user-attachments/assets/04657987-23ec-4649-96fc-a86f5fe1811e
 Players can spawn combat items on a PvP server. 10 items are listed at a time in a menu.
 For pagination, there is a 'Previous Page' and a 'Next Page' button at the very end of
 the menu.
+
 ```php
 // -- initialization: shared state variables used across all pages --
 $items = array_filter(VanillaItems::getAll(), fn($item) => $item instanceof Durable);
@@ -161,10 +162,10 @@ while(true){
 	$sublist = array_slice($items, $offset, $length);
 	$buttons = [];
 	foreach($sublist as $id => $item){
-		$buttons[$id] = Button::simple($item->getName());
+		$buttons[$id] = MenuElement::button($item->getName());
 	}
-	if($offset > 0) $buttons["prev"] = Button::simple("[Previous Page]");
-	if($offset + $length < count($items)) $buttons["next"] = Button::simple("[Next Page]");
+	if($offset > 0) $buttons["prev"] = MenuElement::button("[Previous Page]");
+	if($offset + $length < count($items)) $buttons["next"] = MenuElement::button("[Next Page]");
 	$form = AwaitForm::menu("Free Items!", "Have fun soldier :)", $buttons);
 	try{
 		$response = yield from $form->request($player);
@@ -225,9 +226,9 @@ while($state !== "DESTROY"){
 		$message[] = "Reason: {$reason}";
 		$message[] = "Comment: {$comment}";
 		$form = AwaitForm::menu("Confirm Filing Report?", implode(TextFormat::EOL, $message), [
-			"yes" => Button::simple("Confirm"),
-			"edit" => Button::simple("Make Changes"),
-			"no" => Button::simple("Cancel")
+			"yes" => MenuElement::button("Confirm"),
+			"edit" => MenuElement::button("Make Changes"),
+			"no" => MenuElement::button("Cancel")
 		]);
 		$response = yield from $form->requestOrFallback($player, "no");
 		$state = match($response){
@@ -257,11 +258,12 @@ https://github.com/user-attachments/assets/e654822f-598a-4b67-af93-049de33197a2
 Form windows store only display properties and not player state. A form window (i.e., `AwaitForm::dialog()`,
 `AwaitForm::form()`, `AwaitForm::menu()`) may be instantiated once and reused multiple times. All window properties that
 are not readonly are allowed to be mutated.
+
 ```php
 $form = AwaitForm::menu("title", "content", []);
 $form->title = "New title";
-$form->buttons[] = [Button::simple("Get free food"), "food"];
-$form->buttons[] = [Button::simple("Get free block"), "block"];
+$form->elements[] = [MenuElement::button("Get free food"), "food"];
+$form->elements[] = [MenuElement::button("Get free block"), "block"];
 while(true){
 	try{
 		yield from $form->request($player);

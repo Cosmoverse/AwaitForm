@@ -84,12 +84,12 @@ final class AwaitForm implements Form{
 	 * @template TIndex of string|int
 	 * @param string $title
 	 * @param string $content
-	 * @param array<TIndex, Button> $buttons
+	 * @param array<TIndex, MenuElement> $elements
 	 * @return MenuWindow<TIndex>
 	 */
-	public static function menu(string $title, string $content, array $buttons) : MenuWindow{
+	public static function menu(string $title, string $content, array $elements) : MenuWindow{
 		$values = [];
-		foreach($buttons as $index => $button){
+		foreach($elements as $index => $button){
 			$values[] = [$button, $index];
 		}
 		return new MenuWindow(self::$player_manager ?? self::playerManagerNotFound(), $title, $content, $values);

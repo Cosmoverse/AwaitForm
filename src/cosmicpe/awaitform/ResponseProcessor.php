@@ -72,9 +72,17 @@ final class ResponseProcessor{
 		}
 		if($this->type === 2){
 			is_int($response) || throw new InvalidArgumentException("Unexpected response: " . gettype($response) . ", expected integer");
-			isset($request["buttons"][$response]) || throw new InvalidArgumentException("Unexpected response: {$response}, index out of range");
-			assert($response >= 0);
-			return $response;
+			$interactable_seq = -1;
+			$interactable_idx = null;
+			foreach($tags as $index => ["interactable" => $interactable]){
+				if($interactable && $response === ++$interactable_seq){
+					$interactable_idx = $index;
+					break;
+				}
+			}
+			$interactable_idx ?? throw new InvalidArgumentException("Unexpected response: {$response}, element not found");
+			assert($interactable_idx >= 0);
+			return $interactable_idx;
 		}
 		if($this->type === 1){
 			is_array($response) || throw new InvalidArgumentException("Unexpected response: " . gettype($response) . ", expected array");
