@@ -32,7 +32,10 @@ final class PlayerManager{
 			$this->pending[$event->getPlayer()->getId()] = [];
 		}, EventPriority::LOWEST, $plugin);
 		$manager->registerEvent(PlayerQuitEvent::class, function(PlayerQuitEvent $event) : void{
-			$pending = $this->pending[$id = $event->getPlayer()->getId()];
+			if(!isset($this->pending[$id = $event->getPlayer()->getId()])){
+				return;
+			}
+			$pending = $this->pending[$id];
 			unset($this->pending[$id]);
 			foreach($pending as [, $reject]){
 				$reject(new AwaitFormException(code: AwaitFormException::ERR_PLAYER_QUIT));
